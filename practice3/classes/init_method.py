@@ -14,3 +14,4 @@ person2 = Person("Ali", 20)
 
 print(person1.name, person1.age)
 print(person2.name, person2.age)
+    
