@@ -7,6 +7,7 @@ class MusicPlayer:
 
         pygame.mixer.init()
 
+<<<<<<< HEAD
         pygame.mixer.music.set_volume(1.0)
 
         self.folder = "music/sample_tracks"
@@ -19,6 +20,13 @@ class MusicPlayer:
         self.backgrounds = [
             "images/background1.jpg",
             "images/background2.jpg"
+=======
+        self.folder = "music/sample_tracks"
+
+        self.playlist = [
+            "track1.wav",
+            "track2.wav"
+>>>>>>> 90c314fbe17aa9ad27b561e0ef523c7fc8e7a11d
         ]
 
         self.current = 0
@@ -56,8 +64,12 @@ class MusicPlayer:
         ) % len(self.playlist)
 
         self.load()
+<<<<<<< HEAD
         self.play()
 
     def get_background(self):
 
         return self.backgrounds[self.current]
+=======
+        self.play()
+>>>>>>> 90c314fbe17aa9ad27b561e0ef523c7fc8e7a11d

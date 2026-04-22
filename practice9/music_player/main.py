@@ -27,6 +27,7 @@ running = True
 
 while running:
 
+<<<<<<< HEAD
     bg_path = player.get_background()
 
     background = pygame.image.load(
@@ -39,11 +40,18 @@ while running:
     )
 
     screen.blit(background, (0, 0))
+=======
+    screen.fill((255, 255, 255))
+>>>>>>> 90c314fbe17aa9ad27b561e0ef523c7fc8e7a11d
 
     text = font.render(
         f"Track: {player.playlist[player.current]}",
         True,
+<<<<<<< HEAD
         (255, 255, 255)
+=======
+        (0, 0, 0)
+>>>>>>> 90c314fbe17aa9ad27b561e0ef523c7fc8e7a11d
     )
 
     screen.blit(text, (50, 150))
