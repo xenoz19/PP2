@@ -1,21 +1,15 @@
-
-# =========================================================
-# FILE: paint.py
-# =========================================================
-
 import pygame
 import sys
 from datetime import datetime
 
-# импортируем функции из tools.py
-from tools import flood_fill, draw_line, draw_rectangle, draw_circle
+from tools import *
 
 pygame.init()
 
 WIDTH, HEIGHT = 1000, 700
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("TSIS2 Paint Application")
+pygame.display.set_caption("TSIS2 Paint")
 
 canvas = pygame.Surface((WIDTH, HEIGHT))
 canvas.fill((255, 255, 255))
@@ -27,9 +21,9 @@ BLACK = (0, 0, 0)
 
 current_color = BLACK
 
-# ===============================
+# =========================================================
 # BRUSH SIZE
-# ===============================
+# =========================================================
 
 brush_sizes = {
     1: 2,
@@ -40,9 +34,9 @@ brush_sizes = {
 current_brush = 2
 brush_size = brush_sizes[current_brush]
 
-# ===============================
+# =========================================================
 # TOOLS
-# ===============================
+# =========================================================
 
 TOOL_PENCIL = "pencil"
 TOOL_LINE = "line"
@@ -51,6 +45,11 @@ TOOL_CIRCLE = "circle"
 TOOL_FILL = "fill"
 TOOL_ERASER = "eraser"
 
+TOOL_SQUARE = "square"
+TOOL_RIGHT_TRIANGLE = "right_triangle"
+TOOL_EQUILATERAL_TRIANGLE = "equilateral_triangle"
+TOOL_RHOMBUS = "rhombus"
+
 current_tool = TOOL_PENCIL
 
 last_pos = None
@@ -58,29 +57,30 @@ start_pos = None
 is_drawing = False
 
 font = pygame.font.SysFont(None, 28)
-text_input = ""
-text_position = None
-text_active = False
 
-
-# ===============================
+# =========================================================
 # SAVE FUNCTION
-# ===============================
+# =========================================================
 
 def save_canvas():
 
     now = datetime.now()
 
-    filename = now.strftime("drawing_%Y-%m-%d_%H-%M-%S.png")
+    filename = now.strftime(
+        "drawing_%Y-%m-%d_%H-%M-%S.png"
+    )
 
-    pygame.image.save(canvas, filename)
+    pygame.image.save(
+        canvas,
+        filename
+    )
 
     print("Saved:", filename)
 
 
-# ===============================
+# =========================================================
 # MAIN LOOP
-# ===============================
+# =========================================================
 
 running = True
 
@@ -91,24 +91,23 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-        # ===============================
-        # KEYBOARD
-        # ===============================
+        # =================================================
+        # KEYBOARD CONTROLS
+        # =================================================
 
         if event.type == pygame.KEYDOWN:
 
+            # Brush size
             if event.key == pygame.K_1:
-                current_brush = 1
-                brush_size = brush_sizes[current_brush]
+                brush_size = brush_sizes[1]
 
             if event.key == pygame.K_2:
-                current_brush = 2
-                brush_size = brush_sizes[current_brush]
+                brush_size = brush_sizes[2]
 
             if event.key == pygame.K_3:
-                current_brush = 3
-                brush_size = brush_sizes[current_brush]
+                brush_size = brush_sizes[3]
 
+            # Tools
             if event.key == pygame.K_p:
                 current_tool = TOOL_PENCIL
 
@@ -127,33 +126,25 @@ while running:
             if event.key == pygame.K_e:
                 current_tool = TOOL_ERASER
 
+            if event.key == pygame.K_q:
+                current_tool = TOOL_SQUARE
+
+            if event.key == pygame.K_t:
+                current_tool = TOOL_RIGHT_TRIANGLE
+
+            if event.key == pygame.K_y:
+                current_tool = TOOL_EQUILATERAL_TRIANGLE
+
+            if event.key == pygame.K_h:
+                current_tool = TOOL_RHOMBUS
+
+            # Save
             if event.key == pygame.K_s and pygame.key.get_mods() & pygame.KMOD_CTRL:
                 save_canvas()
 
-            # TEXT TOOL
-
-            if text_active:
-
-                if event.key == pygame.K_RETURN:
-                    text_surface = font.render(text_input, True, current_color)
-                    canvas.blit(text_surface, text_position)
-
-                    text_input = ""
-                    text_active = False
-
-                elif event.key == pygame.K_ESCAPE:
-                    text_input = ""
-                    text_active = False
-
-                elif event.key == pygame.K_BACKSPACE:
-                    text_input = text_input[:-1]
-
-                else:
-                    text_input += event.unicode
-
-        # ===============================
+        # =================================================
         # MOUSE DOWN
-        # ===============================
+        # =================================================
 
         if event.type == pygame.MOUSEBUTTONDOWN:
 
@@ -164,16 +155,17 @@ while running:
             last_pos = (x, y)
 
             if current_tool == TOOL_FILL:
-                flood_fill(canvas, x, y, current_color)
 
-            if current_tool == "text":
-                text_position = (x, y)
-                text_active = True
-                text_input = ""
+                flood_fill(
+                    canvas,
+                    x,
+                    y,
+                    current_color
+                )
 
-        # ===============================
+        # =================================================
         # MOUSE MOTION
-        # ===============================
+        # =================================================
 
         if event.type == pygame.MOUSEMOTION:
 
@@ -193,7 +185,6 @@ while running:
 
                     last_pos = (x, y)
 
-                # ERASER
                 if current_tool == TOOL_ERASER:
 
                     pygame.draw.line(
@@ -206,9 +197,9 @@ while running:
 
                     last_pos = (x, y)
 
-        # ===============================
+        # =================================================
         # MOUSE UP
-        # ===============================
+        # =================================================
 
         if event.type == pygame.MOUSEBUTTONUP:
 
@@ -217,34 +208,78 @@ while running:
             x, y = event.pos
 
             if current_tool == TOOL_LINE:
-                draw_line(canvas, current_color, start_pos, (x, y), brush_size)
+
+                draw_line(
+                    canvas,
+                    current_color,
+                    start_pos,
+                    (x, y),
+                    brush_size
+                )
 
             if current_tool == TOOL_RECT:
-                draw_rectangle(canvas, current_color, start_pos, (x, y), brush_size)
+
+                draw_rectangle(
+                    canvas,
+                    current_color,
+                    start_pos,
+                    (x, y),
+                    brush_size
+                )
 
             if current_tool == TOOL_CIRCLE:
-                draw_circle(canvas, current_color, start_pos, (x, y), brush_size)
+
+                draw_circle(
+                    canvas,
+                    current_color,
+                    start_pos,
+                    (x, y),
+                    brush_size
+                )
+
+            if current_tool == TOOL_SQUARE:
+
+                draw_square(
+                    canvas,
+                    current_color,
+                    start_pos,
+                    (x, y),
+                    brush_size
+                )
+
+            if current_tool == TOOL_RIGHT_TRIANGLE:
+
+                draw_right_triangle(
+                    canvas,
+                    current_color,
+                    start_pos,
+                    (x, y),
+                    brush_size
+                )
+
+            if current_tool == TOOL_EQUILATERAL_TRIANGLE:
+
+                draw_equilateral_triangle(
+                    canvas,
+                    current_color,
+                    start_pos,
+                    (x, y),
+                    brush_size
+                )
+
+            if current_tool == TOOL_RHOMBUS:
+
+                draw_rhombus(
+                    canvas,
+                    current_color,
+                    start_pos,
+                    (x, y),
+                    brush_size
+                )
 
     screen.fill(WHITE)
 
     screen.blit(canvas, (0, 0))
-
-    if is_drawing and current_tool == TOOL_LINE:
-
-        mouse_pos = pygame.mouse.get_pos()
-
-        pygame.draw.line(
-            screen,
-            current_color,
-            start_pos,
-            mouse_pos,
-            brush_size
-        )
-
-    if text_active:
-
-        text_surface = font.render(text_input, True, current_color)
-        screen.blit(text_surface, text_position)
 
     pygame.display.flip()
 
