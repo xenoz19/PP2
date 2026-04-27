@@ -1,5 +1,10 @@
 [
     {
+        "name": "jk",
+        "coins": 14,
+        "distance": 0
+    },
+    {
         "name": "we",
         "coins": 7,
         "distance": 0
@@ -40,13 +45,8 @@
         "distance": 3125
     },
     {
-        "name": "\u0446\u0443",
-        "coins": 3,
-        "distance": 1715
-    },
-    {
-        "name": "we",
-        "coins": 3,
+        "name": "qwe",
+        "coins": 4,
         "distance": 0
     }
 ]
