@@ -49,7 +49,7 @@ game_over_img = pygame.transform.scale(
 )
 
 # Поворот машин
-player_img = pygame.transform.rotate(player_img, 180)
+player_img = pygame.transform.rotate(player_img, 360)
 enemy_img = pygame.transform.rotate(enemy_img, 180)
 
 # Полосы дороги
