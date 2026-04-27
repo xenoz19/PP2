@@ -1,5 +1,10 @@
 [
     {
+        "name": "we",
+        "coins": 7,
+        "distance": 0
+    },
+    {
         "name": "qwe",
         "coins": 5,
         "distance": 3955
@@ -8,6 +13,11 @@
         "name": "qwe",
         "coins": 5,
         "distance": 3790
+    },
+    {
+        "name": "we",
+        "coins": 5,
+        "distance": 0
     },
     {
         "name": "qwe",
@@ -35,18 +45,8 @@
         "distance": 1715
     },
     {
-        "name": "\u0446\u0443",
-        "coins": 2,
-        "distance": 1790
-    },
-    {
-        "name": "\u0446\u0443",
-        "coins": 2,
-        "distance": 1285
-    },
-    {
-        "name": "\u0446\u0443",
-        "coins": 2,
-        "distance": 1465
+        "name": "we",
+        "coins": 3,
+        "distance": 0
     }
 ]
